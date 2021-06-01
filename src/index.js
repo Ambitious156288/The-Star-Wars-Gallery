@@ -75,7 +75,14 @@ class StarWarsCatalog {
             </div>
             <div class="card-action">
               ${this.properties
-                .map((property) => `<p>${property}: ${eval(property)}</p>`)
+                .map(
+                  (property) => `
+                    <p> 
+                      <span class="card-action--bold">${property}: </span>
+                      <span>${eval(property)}</span>
+                    </p>
+                `
+                )
                 .join("")}
             </div>
           </div>
