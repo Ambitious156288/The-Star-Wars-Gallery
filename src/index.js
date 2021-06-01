@@ -13,6 +13,8 @@ class StarWarsCatalog {
     this.UiSelectors = {
       content: "[data-content]",
     };
+
+    this.properties = null;
   }
 
   initializePeople() {
@@ -54,20 +56,27 @@ class StarWarsCatalog {
     birth_year,
     gender,
   }) {
+    const peopleProperties = [
+      "height",
+      "mass",
+      "hair_color",
+      "skin_color",
+      "eye_color",
+      "birth_year",
+      "gender",
+    ];
+
+    this.properties = [...peopleProperties];
+
     return `       
           <div class="card blue-grey darken-1 card__size">
             <div class="card-content white-text">
               <span class="card-title">${name}</span>
             </div>
             <div class="card-action">
-            <p>height: ${height}</p>
-            <p>mass: ${mass}</p>
-            <p>height: ${hair_color}</p>
-            <p>mass: ${skin_color}</p>
-            <p>height: ${height}</p>
-            <p>mass: ${eye_color}</p>
-            <p>height: ${birth_year}</p>
-            <p>mass: ${gender}</p>
+              ${this.properties
+                .map((property) => `<p>${property}: ${eval(property)}</p>`)
+                .join("")}
             </div>
           </div>
     `;
