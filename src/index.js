@@ -1,9 +1,15 @@
 import "./styles/style.scss";
 class StarWarsCatalog {
   constructor() {
+    this.pageSize = 4;
+    this.currentPage = 1;
+
     this.people = [];
+    this.newPeople = [];
 
     this.catalog = null;
+    this.button = null;
+    this.loader = null;
 
     this.API = "https://swapi.dev/api";
     this.API_RESOURCE = "people";
@@ -12,6 +18,8 @@ class StarWarsCatalog {
 
     this.UiSelectors = {
       content: "[data-content]",
+      button: "[data-button]",
+      loader: "[data-loader]",
     };
 
     this.properties = null;
@@ -19,18 +27,37 @@ class StarWarsCatalog {
 
   initializePeople() {
     this.catalog = document.querySelector(this.UiSelectors.content);
+    this.button = document.querySelector(this.UiSelectors.button);
+    this.loader = document.querySelector(this.UiSelectors.loader);
+
+    this.addEventListeners();
 
     this.pullPeople();
   }
 
+  addEventListeners() {
+    this.button.addEventListener("click", () => this.pullPeople());
+  }
+
   async pullPeople() {
-    const { results } = await this.fetchData(this.API_ENDPOINT);
+    this.toggleShowElement(this.loader, this.button);
 
-    this.people = [...results];
+    const { results } = await this.fetchData(
+      `${this.API_ENDPOINT}/?page=${this.currentPage}`
+    );
 
-    this.createCatalog(this.people);
+    this.toggleShowElement(this.loader, this.button);
 
-    console.log(results);
+    this.people = [...this.people, ...results];
+    this.newPeople = [...results];
+
+    this.createCatalog(this.newPeople);
+
+    this.currentPage++;
+  }
+
+  toggleShowElement(...elements) {
+    elements.forEach((element) => element.classList.toggle("hide"));
   }
 
   async fetchData(url) {
