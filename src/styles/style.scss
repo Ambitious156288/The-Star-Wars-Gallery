@@ -20,3 +20,22 @@ body {
     margin: 2rem 0;
   }
 }
+
+.catalog {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.catalog__content {
+  display: grid;
+  grid-gap: 7px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card__size {
+  max-width: 300px;
+}

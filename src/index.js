@@ -39,9 +39,9 @@ class StarWarsCatalog {
   }
 
   createCatalog(people) {
-    this.catalog.innerHTML += [
-      people.map((person) => this.createPerson(person)),
-    ];
+    this.catalog.insertAdjacentHTML("beforeend", [
+      people.map((person) => this.createPerson(person)).join(""),
+    ]);
   }
 
   createPerson({
@@ -55,9 +55,7 @@ class StarWarsCatalog {
     gender,
   }) {
     return `       
-    <div class="row">
-        <div class="col s12 m4">
-          <div class="card blue-grey darken-1">
+          <div class="card blue-grey darken-1 card__size">
             <div class="card-content white-text">
               <span class="card-title">${name}</span>
             </div>
@@ -72,8 +70,6 @@ class StarWarsCatalog {
             <p>mass: ${gender}</p>
             </div>
           </div>
-        </div>
-      </div>
     `;
   }
 }
