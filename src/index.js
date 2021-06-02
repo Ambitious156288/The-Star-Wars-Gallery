@@ -1,7 +1,6 @@
 import "./styles/style.scss";
 class StarWarsCatalog {
   constructor() {
-    this.pageSize = 4;
     this.currentPage = 1;
 
     this.people = [];
@@ -10,25 +9,31 @@ class StarWarsCatalog {
     this.catalog = null;
     this.button = null;
     this.loader = null;
+    this.searchBar = null;
+    this.info = null;
+
+    this.properties = null;
 
     this.API = "https://swapi.dev/api";
     this.API_RESOURCE = "people";
-
     this.API_ENDPOINT = `${this.API}/${this.API_RESOURCE}`;
 
     this.UiSelectors = {
       content: "[data-content]",
       button: "[data-button]",
       loader: "[data-loader]",
+      searchBar: "searchBar",
+      card: "[data-card]",
+      info: "[data-info]",
     };
-
-    this.properties = null;
   }
 
   initializePeople() {
     this.catalog = document.querySelector(this.UiSelectors.content);
     this.button = document.querySelector(this.UiSelectors.button);
     this.loader = document.querySelector(this.UiSelectors.loader);
+    this.searchBar = document.getElementById(this.UiSelectors.searchBar);
+    this.info = document.querySelector(this.UiSelectors.info);
 
     this.addEventListeners();
 
@@ -37,6 +42,7 @@ class StarWarsCatalog {
 
   addEventListeners() {
     this.button.addEventListener("click", () => this.pullPeople());
+    this.searchBar.addEventListener("keyup", () => this.filterPeople());
   }
 
   async pullPeople() {
@@ -95,25 +101,30 @@ class StarWarsCatalog {
 
     this.properties = [...peopleProperties];
 
-    return `       
-          <div class="card blue-grey darken-1 card__size">
-            <div class="card-content white-text">
-              <span class="card-title">${name}</span>
-            </div>
-            <div class="card-action">
-              ${this.properties
-                .map(
-                  (property) => `
-                    <p> 
-                      <span class="card-action--bold">${property}: </span>
-                      <span>${eval(property)}</span>
-                    </p>
-                `
-                )
-                .join("")}
-            </div>
-          </div>
+    return `     
+      <div data-card>  
+        <p class="card-action--bold">${name}</p>
+        <p>mass: ${mass}</p>
+        <p>height: ${hair_color}</p>
+        <p>mass: ${skin_color}</p>
+        <p>height: ${height}</p>
+        <p>mass: ${eye_color}</p>
+        <p>height: ${birth_year}</p>
+        <p>mass: ${gender}</p>
+      </div> 
     `;
+  }
+
+  filterPeople() {
+    const searchQuery = this.searchBar.value.toLowerCase();
+
+    const filteredCards = this.people.filter((person) =>
+      person.name.toLowerCase().includes(searchQuery)
+    );
+
+    filteredCards.forEach(({ id }) =>
+      document.getElementById(id).classList.add("hide")
+    );
   }
 }
 
