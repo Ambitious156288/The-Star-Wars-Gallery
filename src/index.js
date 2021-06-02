@@ -102,16 +102,23 @@ class StarWarsCatalog {
     this.properties = [...peopleProperties];
 
     return `     
-      <div data-card>  
-        <p class="card-action--bold">${name}</p>
-        <p>mass: ${mass}</p>
-        <p>height: ${hair_color}</p>
-        <p>mass: ${skin_color}</p>
-        <p>height: ${height}</p>
-        <p>mass: ${eye_color}</p>
-        <p>height: ${birth_year}</p>
-        <p>mass: ${gender}</p>
-      </div> 
+      <div class="card blue-grey darken-1 card__size" data-card>
+        <div class="card-content white-text">
+          <span class="card-title">${name}</span>
+        </div>
+        <div class="card-action">
+          ${this.properties
+            .map(
+              (property) => `
+                <p> 
+                  <span class="card-action--bold">${property}: </span>
+                  <span>${eval(property)}</span>
+                </p>
+            `
+            )
+            .join("")}
+        </div>
+      </div>
     `;
   }
 
