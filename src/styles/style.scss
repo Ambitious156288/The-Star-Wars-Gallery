@@ -25,35 +25,40 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
-}
 
-.catalog__content {
-  display: grid;
-  grid-gap: 7px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  justify-items: center;
-  align-items: center;
+  & .catalog__content {
+    display: grid;
+    grid-gap: 7px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    justify-items: center;
+    align-items: center;
+
+    & .catalog__info {
+      font-size: 24px;
+      color: #fff;
+    }
+  }
+
+  & .btn {
+    margin-top: 40px;
+  }
 }
 
 .card__size {
   width: 270px;
   height: 450px;
-}
 
-.card-title {
-  text-decoration: underline;
-  letter-spacing: 3px;
-}
+  & .card-title {
+    text-decoration: underline;
+    letter-spacing: 3px;
+  }
 
-.card-action--bold {
-  font-weight: bold;
+  & .card-action--bold {
+    font-weight: bold;
+  }
 }
 
 .hide {
   display: none;
-}
-
-.btn {
-  margin-top: 40px;
 }

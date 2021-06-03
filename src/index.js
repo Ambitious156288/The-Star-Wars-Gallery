@@ -1,8 +1,6 @@
 import "./styles/style.scss";
-import { v4 as uuidv4 } from "uuid";
 class StarWarsCatalog {
   constructor() {
-    this.id = uuidv4();
     this.currentPage = 1;
 
     this.people = [];
@@ -38,7 +36,6 @@ class StarWarsCatalog {
     this.info = document.querySelector(this.UiSelectors.info);
 
     this.addEventListeners();
-
     this.pullPeople();
   }
 
@@ -140,7 +137,7 @@ class StarWarsCatalog {
       ({ name }) => !name.toLowerCase().includes(searchQuery)
     );
 
-    filteredCards.length === this.cards.length
+    filteredCards.length === this.people.length
       ? this.info.classList.remove("hide")
       : this.info.classList.add("hide");
 
