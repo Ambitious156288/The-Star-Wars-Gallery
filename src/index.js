@@ -1,6 +1,8 @@
 import "./styles/style.scss";
+import { v4 as uuidv4 } from "uuid";
 class StarWarsCatalog {
   constructor() {
+    this.id = uuidv4();
     this.currentPage = 1;
 
     this.people = [];
@@ -80,6 +82,7 @@ class StarWarsCatalog {
   }
 
   createPerson({
+    url,
     name,
     height,
     mass,
@@ -102,35 +105,47 @@ class StarWarsCatalog {
     this.properties = [...peopleProperties];
 
     return `     
-      <div class="card blue-grey darken-1 card__size" data-card>
-        <div class="card-content white-text">
-          <span class="card-title">${name}</span>
+        <div id=${url} class="card blue-grey darken-1 card__size" data-card>
+          <div class="card-content white-text">
+            <span class="card-title">${name}</span>
+          </div>
+          <div class="card-action">
+            ${this.properties
+              .map(
+                (property) => `
+                  <p> 
+                    <span class="card-action--bold">${property}: </span>
+                    <span>${eval(property)}</span>
+                  </p>
+              `
+              )
+              .join("")}
+          </div>
         </div>
-        <div class="card-action">
-          ${this.properties
-            .map(
-              (property) => `
-                <p> 
-                  <span class="card-action--bold">${property}: </span>
-                  <span>${eval(property)}</span>
-                </p>
-            `
-            )
-            .join("")}
-        </div>
-      </div>
     `;
   }
 
   filterPeople() {
-    const searchQuery = this.searchBar.value.toLowerCase();
+    let searchQuery = this.searchBar.value.toLowerCase();
 
-    const filteredCards = this.people.filter((person) =>
-      person.name.toLowerCase().includes(searchQuery)
+    searchQuery.length
+      ? this.button.classList.add("hide")
+      : this.button.classList.remove("hide");
+
+    document
+      .querySelectorAll(this.UiSelectors.card)
+      .forEach((el) => el.classList.remove("hide"));
+
+    const filteredCards = this.people.filter(
+      ({ name }) => !name.toLowerCase().includes(searchQuery)
     );
 
-    filteredCards.forEach(({ id }) =>
-      document.getElementById(id).classList.add("hide")
+    filteredCards.length === this.cards.length
+      ? this.info.classList.remove("hide")
+      : this.info.classList.add("hide");
+
+    filteredCards.forEach(({ url }) =>
+      document.getElementById(url).classList.add("hide")
     );
   }
 }

@@ -1,6 +1,5 @@
 html {
   box-sizing: border-box;
-  // font-size: 62.5%;
 }
 
 *,
@@ -12,9 +11,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  // font-size: 1.6rem;
   text-align: center;
-  // background-image: url(https://starwarsblog.starwars.com/wp-content/uploads/2020/04/star-wars-backgrounds-25.jpg);
+  background-image: url(https://starwarsblog.starwars.com/wp-content/uploads/2020/04/star-wars-backgrounds-25.jpg);
 
   & > * {
     margin: 2rem 0;
